@@ -113,7 +113,7 @@ list.append(2)
 
 func removeDuplicates(_ l: LinkedList) -> LinkedList {
     var listSet = Set<Int>()
-    var newList = LinkedList()
+    let newList = LinkedList()
 
     guard var node = l.first!.next else{
     print("0")
@@ -127,7 +127,7 @@ func removeDuplicates(_ l: LinkedList) -> LinkedList {
     print(listSet.reversed())
 
 for each in listSet{
-    newList.append(each) 
+newList.append(each) 
 }
 print(newList.count)
     return newList

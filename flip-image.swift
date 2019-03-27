@@ -15,3 +15,7 @@ return result
 }
 
 print(rotate([[1,2,3,4], [5,6,7,8], [9,10,11,12], [13,14,15,16]]))
+
+/*
+This algorithm is O( N2 ) , which is the best we can do since any algorithm must touch all N2 elements.
+*/

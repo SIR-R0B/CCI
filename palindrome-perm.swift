@@ -24,6 +24,8 @@ for element in result{
         twoCount += element
     }
 }
+
+print(result)
 if twoCount == charCount - 1 && charCount%2 != 0{
     return true
 }
@@ -37,3 +39,10 @@ print(findPals("madam Im Adam"))
 print(findPals("tact coa"))
 print(findPals("foo"))
 print(findPals("not a palindrome"))
+
+/*
+Gayle Solution: #197
+
+Doesn't improve on the O(n) complexity, but has an interesting approach using a bitvector or [Bool], to just keep track of how many are odd and how many are even, if more than one odd, you return false. Ray Wenderlich has some good documentation on Swift bitvectors.
+
+*/

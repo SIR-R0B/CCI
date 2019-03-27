@@ -26,3 +26,8 @@ func urlIfy(_ S: String, _ size: Int) -> String {
 }
 
 print(urlIfy("Mr John Smith    ", 13))
+
+/*
+Gayle Solution:
+
+*/

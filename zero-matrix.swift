@@ -23,7 +23,7 @@ func delete(_ row: Int, _ col: Int) -> (){
         }
 
     }
-
+//find the zeros first
     for i in 0...m.count-1{
         for j in 0...m[i].count-1{
             if m[i][j] == 0{
@@ -37,6 +37,6 @@ func delete(_ row: Int, _ col: Int) -> (){
 return mCopy
 }
 
-print(findzeros([[1,2,3,4,5,6], [7,8,0,9,10,11], [12,13,14,15,16,17]]))
+print(findzeros([[1,2,3,4,5,6], [7,8,0,9,10,11], [12,13,14,15,16,0]]))
 
 // doesn't work for an mxn matrix, only a nxn square matrix
