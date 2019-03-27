@@ -90,7 +90,7 @@ Gayle Solution:
 Solution 1 = when the length of the list is known return (length - k)th element
 -- because it's so trivial we can almost be sure this is not what the interviewer wanted. Ask them.
 Solution 2 = recursively call, each parent call adds one to a counter, when counter == k, you've hit the kth element
-Solution 3 = two pointers placed k units apart, when the rightmost pointer hits the end, the left most pointer is on the money
+Solution 3 = count is unknown,two pointers placed k units apart, when the rightmost pointer hits the end, the left most pointer is on the money
 */
 
 //Solution 3
