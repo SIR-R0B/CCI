@@ -56,7 +56,7 @@ class List{
     }
 }
 
-func addLeft2Right(_ l: List, _ r: List) -> List {
+/*func addLeft2Right(_ l: List, _ r: List) -> List {
 
     let result = List()
     var sum = 0
@@ -99,7 +99,7 @@ func addLeft2Right(_ l: List, _ r: List) -> List {
 
     return result
 
-}
+}*/
 
 func addRight2Left(_ l: List, _ r: List) -> List {
 
@@ -143,14 +143,46 @@ func addRight2Left(_ l: List, _ r: List) -> List {
     return result
 }
 
+func addLeft2Right(_ l: List, _ r: List) -> List {
+
+    let result = List()
+    var sumLists = 0
+
+    func sumList(_ list: List) -> Int{
+        guard var node = list.head else{
+        return 0
+    }
+
+    var sum = 0
+    var zeroCount = 0
+    
+    sum += node.value 
+    zeroCount += 1
+
+    while let next = node.next{
+        sum += next.value * Int(pow(Float(10),Float(zeroCount)))
+        node = next
+        zeroCount += 1
+    }
+    return sum
+    }
+
+    sumLists = sumList(l) + sumList(r)
+    var digits = sumLists.digits //requires extension of BinaryInteger
+    for i in 0..<digits.count{
+        result.append(digits[i])
+    }
+    return result
+}
+
 var lhs = List()
 var rhs = List()
 
 lhs.append(7)
-lhs.append(1)
-lhs.append(6)
+//lhs.append(1)
+//lhs.append(6)
 rhs.append(5)
-rhs.append(9)
+//rhs.append(9)
 rhs.append(2)
 
 lhs.printList()
