@@ -1,5 +1,7 @@
 /*
 Queue via Stacks: Implement a MyQueue class which implements a queue using two stacks.
+
+Note: for my solution, I didn't see the need to use a second stack when I could just leverage using the 'last' property of the stack
 */
 
 class Node {
@@ -106,13 +108,6 @@ queue.firstStack.printOut()
 
 queue.dequeue()
 queue.dequeue()
-//queue.dequeue()
-
+queue.dequeue()
 
 queue.firstStack.printOut()
-
-
-//print(queue.dequeue()!.value)
-//print(queue.dequeue()!.value)
-//queue.firstStack.printOut()
-//print(queue.dequeue()!.value)
