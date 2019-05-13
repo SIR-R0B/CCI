@@ -4,24 +4,31 @@ Route Between Nodes: Given a directed graph, design an algorithm to find out whe
 
 // create generic Queue struct with enqueue and dequeue methods
 
- struct Queue<T> {
+ struct Queue<T: Hashable> {
     var items: [T] = []
     mutating func enqueue(element: T){
         items.append(element)
     }
     mutating func dequeue() -> T? {
-        if items.isEmpty {
+        /*if items.isEmpty {
             return nil
         }
         else{
             let tempElement = items.first
             items.remove(at: 0)
             return tempElement
+        }*/
+
+        if let temp = items.first{
+            items.remove(at: 0)
+            return temp
+        } else {
+            return nil
         }
     }
 }
 
-// enum for breadthFirstSearch visits
+// enum for breadthFirstSearch visits, needs to be of generic type Element, which is hashable, and have an associated value of the edge visited
 
  enum Visit<Element: Hashable> {
     case source, edge(Edge<Element>)
@@ -40,7 +47,7 @@ Route Between Nodes: Given a directed graph, design an algorithm to find out whe
 // extend vertex struct to confirm to customstringconvertible protocol
 extension Vertex: CustomStringConvertible {
      var description: String {
-        return "\(data)"
+        return  String(describing: data) // another way to write this is: "\(data)"
     }
 }
 // create edge struct
@@ -64,7 +71,7 @@ protocol Graphable {
 // extend Graphable for breadth-first search
 
 extension Graphable {
-
+    //create a BFS function from a to b, returning an optional edge path array. Queue up the source, initialize a visits dictionary with the source vertex and source visit case 
      func breadthFirstSearch(from source: Vertex<Element>, to destination: Vertex<Element>) -> [Edge<Element>]? {
         var queue = Queue<Vertex<Element>>()
         queue.enqueue(element: source)
@@ -72,23 +79,30 @@ extension Graphable {
         var visits : [Vertex<Element> : Visit<Element>] = [source : .source]
 
         while let visitedVertex = queue.dequeue(){
-            if visitedVertex == destination {
+            if destination == visitedVertex {
+                // destination found, let's plot the route in an array of Edges
                 var vertex = destination
-                var route: [Edge<Element>] = []
+                // initialize the route as an empty array of Edges
+                    var route = [Edge<Element>]()
+                //var route: [Edge<Element>] = []
 
                 while let visit = visits[vertex],
                 case .edge(let edge) = visit {
-                    route = [edge] + route
+                    //created a while-loop, which will continue as long as the visits Dictionary has an entry for the vertex, and as long as that entry is an edge. If the entry is a source, then the while-loop will end.
+                    //route = [edge] + route
+                    route.append(edge)
                     vertex = edge.source
                 }
-                return route
-            }
+                return route.reversed()
+            } else {
             let neighborEdges = edges(from: visitedVertex) ?? []
             for edge in neighborEdges {
-                if visits[edge.destination] == nil {
+                // 2. If the Dictionary has no entry for a vertex, then it hasn’t been enqueued yet. 3. Whenever you enqueue a vertex, you don’t just put the vertex into a set, you record the edge you took to reach it.
+                if visits[edge.destination] == nil { // 2
                     queue.enqueue(element: edge.destination)
-                    visits[edge.destination] = .edge(edge)
+                    visits[edge.destination] = .edge(edge) //3
                 }
+            }
             }
         }
         return nil
@@ -98,9 +112,8 @@ extension Graphable {
 // create adjacencyList class
 
 open class AdjacencyList<T: Hashable> {
-     var adjacencyDict : [Vertex<T>: [Edge<T>]] = [:]
-     init(){}
-
+        //var adjacencyDict : [Vertex<T>: [Edge<T>]] = [:]
+        var adjacencyDict = Dictionary<Vertex<T>, [Edge<T>]>()
     func addDirected(from source: Vertex<Element>, to destination: Vertex<Element>, weight: Double?) {
         let edge = Edge(source: source, destination: destination, weight: weight)
         adjacencyDict[source]?.append(edge)
@@ -131,8 +144,6 @@ extension AdjacencyList: Graphable {
             }
             result.append("\(vertex) -> [ \(edgeString) ] \n")
         }
-
-
         return result
      }
 
@@ -175,22 +186,22 @@ let rob = al.createVertex(data: "Rob")
 let desi = al.createVertex(data: "Desi")
 let arwyn = al.createVertex(data: "Arwyn")
 let luba = al.createVertex(data: "Luba")
-let poop = al.createVertex(data: "Poop")
+let goop = al.createVertex(data: "Goop")
 let foo = al.createVertex(data: "Foo")
 
 
 
 al.add(.directed, from: arwyn, to: desi, weight: 7)
 al.add(.directed, from: desi, to: rob, weight: 7)
-al.add(.directed, from: desi, to: poop, weight: 7)
+al.add(.directed, from: desi, to: goop, weight: 7)
 al.add(.directed, from: desi, to: foo, weight: 7)
 al.add(.directed, from: foo, to: desi, weight: 7)
-al.add(.directed, from: poop, to: rob, weight: 7)
+al.add(.directed, from: goop, to: rob, weight: 7)
 al.add(.directed, from: rob, to: luba, weight: 2)
 al.add(.directed, from: luba, to: rob, weight: 0)
 
 print(al.description)
 
-print(al.breadthFirstSearch(from: poop, to: luba) as Any)
+print(al.breadthFirstSearch(from: goop, to: luba) as Any)
 
 
